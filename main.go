@@ -23,7 +23,7 @@ func CheckDNS() {
 		log.Fatal("Error loading .env file")
 	}
 
-	domains := []string{"salescloud.is"}
+	domains := []string{"graph.salescloud.is"}
 	types := []dns.QueryType{dns.TypeA, dns.TypeNS, dns.TypeMX, dns.TypeTXT}
 
 	// Set timeout and retry times
