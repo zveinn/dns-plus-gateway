@@ -12,7 +12,7 @@ func main() {
 
 	for {
 		CheckDNS()
-		time.Sleep(1 * time.Minute)
+		time.Sleep(5 * time.Minute)
 	}
 }
 
@@ -37,12 +37,20 @@ func CheckDNS() {
 	res := resolver.Lookup()
 
 	//res.ResMap is a map[string]*ResultItem, key is the domain
+	var found bool
 	for target := range res.ResMap {
 		log.Printf("%v: \n", target)
 		for _, r := range res.ResMap[target] {
 			if r.Type == "A" {
+				if r.Content == "" {
+					continue
+				}
+				found = true
 				SendMessageToDiscord(r.Record + " " + r.Type + " " + r.Content + " " + time.Now().Format(time.RFC3339))
 			}
 		}
+	}
+	if !found {
+		SendSupportMessageToDiscord("COULD NOT RESOLVE")
 	}
 }
