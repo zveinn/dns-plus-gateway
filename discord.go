@@ -10,7 +10,7 @@ import (
 
 func SendMessageToDiscord(msg string) {
 	newE := new(DH)
-	newE.Content = msg + " <@857300130146418708>"
+	newE.Content = msg
 	payloadBuf := new(bytes.Buffer)
 	json.NewEncoder(payloadBuf).Encode(newE)
 	req, _ := http.NewRequest("POST", os.Getenv("ERROR-URL"), payloadBuf)
